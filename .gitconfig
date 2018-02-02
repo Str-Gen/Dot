@@ -1,0 +1,9 @@
+[user]
+	name = Str-Gen
+	email = laurens.dhooge@telenet.be
+[alias]
+	co = checkout
+	br = branch
+	ci = commit -am
+	st = status
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
