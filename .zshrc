@@ -53,8 +53,6 @@ ZSH_THEME="spaceship"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git archlinux tmux z)
 
-source $ZSH/oh-my-zsh.sh
-
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -69,14 +67,14 @@ source $ZSH/oh-my-zsh.sh
  if [[ -n $SSH_CONNECTION ]]; then
    export EDITOR='vim'
  else
-   export EDITOR='code'
+   export EDITOR='code-insiders'
  fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
 # ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
+ export SSH_KEY_PATH="~/.ssh/id_ecdsa"
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -96,7 +94,27 @@ export PATH="$PATH:/usr/lib/python3.6/site-packages"
 tabs -4
 alias xt="/home/dhoogla/xi-tui/target/release/xi-tui"
 
-source "/home/dhoogla/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
+# Ensure npm finds installed binaries and man pages
+# I have a custom npm pkg directory (no sudo npm install)
+
+NPM_PACKAGES="${HOME}/.npm-packages"
+
+PATH="$PATH:$NPM_PACKAGES/bin"
+
+# unset manpath so we can inherit from /etc/manpath via the manpath cmd
+# delete if you already modified MANPATH elsewhere in this rc file
+unset MANPATH
+export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
+
+# source "/home/dhoogla/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
+
+
+fpath=($fpath "/home/dhoogla/.zfunctions")
+
+# Set Spaceship ZSH as a prompt
+autoload -U promptinit; promptinit
+prompt spaceship
+
 
 # SPACESHIP CUSTOM CONFIG START
 
@@ -134,7 +152,7 @@ SPACESHIP_PROMPT_ORDER=(
 )
 
 # PROMPT
-SPACESHIP_PROMPT_SYMBOL="➜"
+SPACESHIP_CHAR_SYMBOL="➜"
 SPACESHIP_PROMPT_ADD_NEWLINE=true
 SPACESHIP_PROMPT_SEPARATE_LINE=true
 SPACESHIP_PROMPT_PREFIXES_SHOW=true
@@ -175,7 +193,7 @@ SPACESHIP_HOST_SUFFIX=") "
 
 # DIR
 SPACESHIP_DIR_SHOW=true
-SPACESHIP_DIR_PREFIX='' # disable directory prefix, cause it's not the first section
+SPACESHIP_DIR_PREFIX=' ' # disable directory prefix, cause it's not the first section
 SPACESHIP_DIR_SUFFIX="$SPACESHIP_PROMPT_DEFAULT_SUFFIX"
 SPACESHIP_DIR_TRUNC='3' # show only last directory
 SPACESHIP_DIR_COLOR="cyan"
@@ -344,12 +362,12 @@ SPACESHIP_KUBECONTEXT_COLOR="cyan"
 
 # BATTERY
 SPACESHIP_BATTERY_SHOW=true
-SPACESHIP_BATTERY_ALWAYS_SHOW=false
+SPACESHIP_BATTERY_SHOW="always"
 SPACESHIP_BATTERY_PREFIX=""
 SPACESHIP_BATTERY_SUFFIX="$SPACESHIP_PROMPT_DEFAULT_SUFFIX"
-SPACESHIP_BATTERY_CHARGING_SYMBOL="⇡"
-SPACESHIP_BATTERY_DISCHARGING_SYMBOL="⇣"
-SPACESHIP_BATTERY_FULL_SYMBOL="•"
+SPACESHIP_BATTERY_SYMBOOL_CHARGING="⇡"
+SPACESHIP_BATTERY_SYMBOL_DISCHARGING="⇣"
+SPACESHIP_BATTERY_SYMBOL_FULL="•"
 SPACESHIP_BATTERY_THRESHOLD=10
 
 # VI_MODE
@@ -376,7 +394,5 @@ SPACESHIP_EXIT_CODE_COLOR="red"
 
 
 # SPACESHIPT CUSTOM CONFIG END
-
-
 
 
