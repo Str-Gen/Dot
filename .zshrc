@@ -1,8 +1,8 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-# Path to your oh-my-zsh installation.
-export ZSH=/home/dhoogla/.oh-my-zsh
+# Path to your oh-my-zsh installation. The installation to /usr/share indicates the install from an AUR package
+export ZSH=/usr/share/oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -29,10 +29,10 @@ ZSH_THEME="spaceship"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+ COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -106,15 +106,13 @@ PATH="$PATH:$NPM_PACKAGES/bin"
 unset MANPATH
 export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
 
-# source "/home/dhoogla/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
-
-
 fpath=($fpath "/home/dhoogla/.zfunctions")
 
-# Set Spaceship ZSH as a prompt
-autoload -U promptinit; promptinit
-prompt spaceship
-
+# It's a scope thing, the aur packages install to paths in /usr/share, which messes up some scripts
+# You need to redefine $ZSH to point to the oh-my-zsh install location
+# You need to specify the plugins before sourcing $ZSH/oh-my-zsh.sh otherwise the $plugins won't be available as a variable
+source $ZSH/oh-my-zsh.sh
+source "$ZSH/themes/spaceship.zsh-theme"
 
 # SPACESHIP CUSTOM CONFIG START
 
@@ -394,5 +392,3 @@ SPACESHIP_EXIT_CODE_COLOR="red"
 
 
 # SPACESHIPT CUSTOM CONFIG END
-
-
